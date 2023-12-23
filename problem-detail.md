@@ -1,7 +1,7 @@
 # 1. Introduction
 This document specifies a Policy Violation problem detail per [RFC 9457 section 4.2 registered problem type](https://www.rfc-editor.org/rfc/rfc9457.html#registry) to be used with a 403 Forbidden  response code.  Certain AI systems can exhibit behaviors such as giving hallucinated, incorrect, and differing answers for a given input.  Such systems may need a remediation before requests are accepted by them.  This problem detail is designed to be used in any situation when requests should be rejected due to a policy violation until it has been signaled that the requester has been remediated or a specified amount of time has elapsed.
 
-# 2. Policy Violation
+# 2. Policy Violation Problem Detail
 Type URI: https://iana.org/assignments/http-problem-types#policy-violation  
 Title: Policy Violation  
 Recommended HTTP status code: 403  
@@ -9,11 +9,11 @@ Reference: This RFC
 
 The following extension members are defined per [RFC 9457 section 3.2 extension members](https://www.rfc-editor.org/rfc/rfc9457.html#name-extension-members).  At least one of these MUST be present.
 
-* remediationUri - A server specific URI that a requester uses to signal that the state resulting in the policy violation has been remediated.
-* retryAfter - The number of seconds that the requester SHOULD wait to try again unless the remediationUri or scope are present and successfully used.  The `Retry-After` header SHOULD also be present in the response if this member is present.
-* scope - An [RFC 7521 authorization scope](https://www.rfc-editor.org/rfc/rfc7521#section-3.3) required to assert remediation.  The `WWW-Authenticate: Bearer error="insufficient_scope", scope=<required scope>` header SHOULD be included per [RFC 6750 6.2.3 insufficent_scope error value](https://www.rfc-editor.org/rfc/rfc6750.html#section-6.2.3).  If remediationUri is specified, it SHOULD be used with a token bearing the specified authorization scope to assert remediation.  If remediationUri is not present, using the token with a subsequent request asserts remediation.
+* remediationUri - A server specific URI that a requester uses to signal that the state resulting in the policy violation has been remediated.  This is a JSON string.
+* retryAfter - The number of seconds that the requester SHOULD wait to try again unless the remediationUri or scope are present and successfully used.  The `Retry-After` header SHOULD also be present in the response if this member is present.  This is a JSON number.
+* scope - An [RFC 7521 authorization scope](https://www.rfc-editor.org/rfc/rfc7521#section-3.3) required to assert remediation.  The `WWW-Authenticate: Bearer error="insufficient_scope", scope=<required scope>` header SHOULD be included per [RFC 6750 6.2.3 insufficent_scope error value](https://www.rfc-editor.org/rfc/rfc6750.html#section-6.2.3).  If remediationUri is specified, it SHOULD be used with a token bearing the specified authorization scope to assert remediation.  If remediationUri is not present, using the token with a subsequent request asserts remediation.  This is a JSON string.
 
-The server SHOULD continue to reject requests unless the conditions described by the extension members present in the response are satisfied.
+The server SHOULD continue to reject requests unless the conditions described by the extension members present in the response are satisfied.  The server MAY allow requests if both a remediationUri and scope are specified, but the requester resumed requests with the token bearing the specified scope without using the remediationUri.
 
 ### Example:
 ```json
