@@ -1,7 +1,7 @@
 # 1. Introduction
 This document specifies a Policy Violation problem detail per [RFC 9457 4.2 registered problem type](https://www.rfc-editor.org/rfc/rfc9457.html#registry) to be used with a 403 Forbidden  response code.  Certain AI systems can exhibit behaviors such as giving hallucinated, incorrect, and differing answers for a given input.  Such systems may need a remediation before requests are accepted by them.  This problem detail is designed to be used in any situation when requests should be rejected due to a policy violation until it has been signaled that the requester has been remediated.
 
-#2. Policy Violation
+# 2. Policy Violation
 Type URI: https://iana.org/assignments/http-problem-types#policy-violation
 Title: Policy Violation
 Recommended HTTP status code: 403
@@ -29,14 +29,14 @@ WWW-Authenticate: Bearer error="insufficient_scope", scope=policyRemediated
 	"scope": "policyRemediated"
 }
 ```
-The above example shows a response that uses all of the extension members.  In this example, after an hour elapses, the server will accept requests.  Otherwise, the remedationUrl must be accessed using a JWT authorization token with the specified scope.
+The above example shows a response that uses all of the extension members.  In this example, after an hour elapses, the server will accept requests.  Otherwise, the remedationUri must be accessed using a JWT authorization token with the specified scope.
 
 A status code other than 403 MAY be used if it more accurately describes the policy violation.  For example, if the primary reason a policy is violated is because of excessive requests, a 429 error could be used.  Such a status code may improve interoperability with a generic requester that does not process the problem detail. 
 
-# 3 Security Considerations
-The security considerations in [RFC 9457 5 Security Considerations](https://www.rfc-editor.org/rfc/rfc9457.html#name-security-considerations) apply to this.  Specifically, care must be taken that any information contained in the response to the "instance" URI does not leak any information that could be leveraged in an attack against the server.
+# 3. Security Considerations
+The security considerations in [RFC 9457 5 Security Considerations](https://www.rfc-editor.org/rfc/rfc9457.html#name-security-considerations) apply to this.  Specifically, care must be taken that if present any information contained in the response to the "instance" URI does not leak any information that could be leveraged in an attack against the server.
 
-# 4 IANA Considerations
+# 4. IANA Considerations
 Iana is asked to add the following to the "HTTP Problem Types" registry:
 * Type URI: https://iana.org/assignments/http-problem-types#policy-violation
 * Title: Policy Violation
