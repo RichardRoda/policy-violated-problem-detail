@@ -2,9 +2,9 @@
 This document specifies a Policy Violation problem detail per [RFC 9457 section 4.2 registered problem type](https://www.rfc-editor.org/rfc/rfc9457.html#registry) to be used with a 403 Forbidden  response code.  Certain AI systems can exhibit behaviors such as giving hallucinated, incorrect, and differing answers for a given input.  Such systems may need a remediation before requests are accepted by them.  This problem detail is designed to be used in any situation when requests should be rejected due to a policy violation until it has been signaled that the requester has been remediated or a specified amount of time has elapsed.
 
 # 2. Policy Violation
-Type URI: https://iana.org/assignments/http-problem-types#policy-violation
-Title: Policy Violation
-Recommended HTTP status code: 403
+Type URI: https://iana.org/assignments/http-problem-types#policy-violation  
+Title: Policy Violation  
+Recommended HTTP status code: 403  
 Reference: This RFC
 
 The following extension members are defined per [RFC 9457 section 3.2 extension members](https://www.rfc-editor.org/rfc/rfc9457.html#name-extension-members).  At least one of these MUST be present.
